@@ -3,7 +3,7 @@
 The following is the not-so-official API guide - what do I mean by that? 
 
 I am not maintaining this to the level of what would be considered "industry standard".
-We are not committing to zero api breakages and changes (though we avoid doing so as much as possible).
+We are not committing to zero api breakages and changes (though we avoid doing so as much as possible, because updating all the UI calls is a hassle).
 
  - so YMMV, and use at your own risk =X
 
