@@ -23,7 +23,7 @@ All API responses are in JSON unless stated otherwise
 
 # API commands for ...
 
-**Getting test results**
+### Getting test results
 
 `https://api.uilicious.com/v3.0/project/testrun/get?id=<testID>`
 
@@ -52,7 +52,7 @@ Example response
 
 Full example of result can be found here : https://gist.github.com/PicoCreator/99897d11e4645b61c1216d8eec20daf2
 
-**Getting current test concurrency**
+### Getting current test concurrency
 
 `https://api.uilicious.com/v3.0/project/testrun/list/running?projectID=<projectID>`
 
