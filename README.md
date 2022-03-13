@@ -1,6 +1,11 @@
 # Uilicious Somewhat Unofficial API guide
 
-The following is the not-so-official API guide - what do I mean by that? We are not committing to zero api breakages and changes. Also I am not maintaining this to the level of what would be considered "industry standard".
+The following is the not-so-official API guide - what do I mean by that? 
+
+I am not maintaining this to the level of what would be considered "industry standard".
+We are not committing to zero api breakages and changes (though we avoid doing so as much as possible).
+
+ - so YMMV, and use at your own risk =X
 
 # First get you ACCESS_KEY
 
