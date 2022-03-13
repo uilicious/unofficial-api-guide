@@ -39,7 +39,7 @@ Example response
 		"browser" : "chrome",
 		"status" : "pending"
 		"resolution" : "1280x960",
-    ...
+		...
 		"result" : {
 			"id" : "8JWGHaqm1ovYYvR2G54oam",
 			"steps" : [
