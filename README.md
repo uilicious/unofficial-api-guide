@@ -28,9 +28,44 @@ All API responses are in JSON unless stated otherwise
 
 # API commands for ...
 
+### Running a test in a project
+
+You can trigger a test using the following API with a POST request
+
+`https://api.uilicious.com/v3.0/project/testrun/start`
+
+You will be required to send the following either as a `application/x-www-form-urlencoded` or `application/json` format
+
+```
+{
+	"projectID": "<your project ID>",
+	"browser": "chrome",
+	"serverRegion": "default",
+	"runFile": "<filename of test to run in your project>"
+}
+```
+
+You would get the following if the test was started succesfully
+
+```
+{
+	"result" : {
+		"testRunIDs" : [
+			"<you test ID>"
+		],
+		"testRunBillID" : "<internal request ID>",
+		"testRuns" : [
+			{ ... additional information on your test run ... }
+		]
+	}
+}
+```
+
 ### Getting test results
 
-`https://api.uilicious.com/v3.0/project/testrun/get?id=<testID>`
+> Note: test results do expire after 3 months 
+
+`https://api.uilicious.com/v3.0/project/testrun/get?id=<test ID>`
 
 Example response
 
@@ -38,15 +73,15 @@ Example response
 {
 	"result" : {
 		"type" : "MANUAL",
-    "id" : "8JWGHaqm1ovYYvR2G54oam",
-		"testRunBillID" : "EAMdDc1hSCsQJfSPoDpMi6",
+		"id" : "<test ID>",
+		"testRunBillID" : "<internal request ID>",
 		"createdAt" : 1647175995,
 		"browser" : "chrome",
 		"status" : "pending"
 		"resolution" : "1280x960",
 		...
 		"result" : {
-			"id" : "8JWGHaqm1ovYYvR2G54oam",
+			"id" : "<test ID>",
 			"steps" : [
 				{ ... }
 			]
@@ -56,6 +91,109 @@ Example response
 ```
 
 Full example of result can be found here : https://gist.github.com/PicoCreator/99897d11e4645b61c1216d8eec20daf2
+
+### Running a JOB in a project
+
+You can trigger a scheduled JOB using the following API with a POST request
+
+`https://api.uilicious.com/v3.0/project/job/<jobID>/run`
+
+You would get the following if the test was started succesfully
+
+```
+{
+	"result" : {
+		"testRunIDs" : [
+			"<you test ID>"
+		],
+		"testRunBillID" : "<internal request ID>",
+		"testRuns" : [
+			{ ... additional information on your test run ... }
+		]
+	}
+}
+```
+
+You will get the following response
+
+```
+{
+	"result" : {
+		.... (note most values here are internal ID and is not useful directly) ....
+		"status" : "created"
+	}
+}
+```
+
+Note you will get the following if the JOB is already scheduled / running
+
+```
+{
+	"ERROR" : {
+		"stack" : "...",
+		"code" : "ALREADY_RUNNING_JOB",
+		"message" : "There's already a pending task to run this job."
+	}
+}
+```
+
+### Getting the latest JOB result
+
+At any point of time, you can get the latest status of a test job using
+
+`https://api.uilicious.com/v3.0/project/job/testrunset/list?start=0&length=1&jobID=<job ID>`
+
+This should give the following response
+
+```
+{
+	"result" : [
+		{
+			// .... (note most values here are internal ID and is not useful directly) ....
+
+			"testRunIDs" : [
+				"< test run ID, one for each browser >"
+			],
+			"jobID" : "< job ID >",
+			"testRunRequests" : [
+				{
+					"testRunIDs" : [
+						"< test run ID >""
+					],
+					
+					// ... (additional information on your test run) ...
+
+					// Status of a test
+					"status" : "failure"
+				},
+
+				// ... additional objects for each browser in job ...
+			],
+			"testRuns" : [
+				{
+					"id" : "< test run ID >"",
+					
+					// ... (additional information on your test run) ...
+
+					// Status of a test
+					"status" : "failure"
+				},
+
+				// ... additional objects for each browser in job ...
+			],
+			
+			"runTime" : 1660188429,
+			"projectID" : "< project ID >",
+
+			// Overall status of the job
+			"status" : "failure"
+		}
+	],
+	"start" : 0,
+	"length" : 1,
+	"totalCount" : 2
+}
+```
 
 ### Getting current test concurrency
 
